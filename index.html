@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link  type="text/css" rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/f500c22c57.js" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div class="music-player">
+<nav>
+    <div class="circle">
+        <i class="fa-solid fa-angles-left"></i>
+    </div>
+    <div class="circle">
+        <i class="fa-solid fa-bars"></i>
+</nav>
+<img src="media/Lag-Jaa-Gale-Journey-of-a-song.webp" class="song-img">
+<h1>Lag Ja Gale Ki Phir</h1>
+<p>Lata Mangeshkar</p>
+<audio id="song">
+    <source src="media/old_lata_mangeshkar_woh_kaun_thi_lag_ja_gale.mp3" type="audio/mpeg">
+    
+
+</audio>
+<input type="range"  value="0" id="prog">
+<div class="controls">
+    <div>
+        <i class="fa-solid fa-backward"></i>
+    </div>
+    <div onclick="playpause()">
+        <i class="fa-solid fa-play" id="ctrlIcon"></i>
+    </div>
+    <div>
+        <i class="fa-solid fa-forward"></i>
+    </div>
+</div>
+       </div>
+    </div>
+    <script >
+        let prog=document.getElementById("prog");
+        let song=document.getElementById("song");
+        let ctrlIcon=document.getElementById("ctrlIcon");
+        let songImg=document.querySelector(".song-img");
+
+        song.onloadedmetadata=function(){
+            prog.max= song.duration;
+            prog.value=song.currentTime;
+        }
+        function playpause(){
+            if(ctrlIcon.classList.contains("fa-pause")){
+                song.pause();
+                ctrlIcon.classList.remove("fa-pause");
+                ctrlIcon.classList.add("fa-play");
+            }
+            else{
+                song.play();
+                ctrlIcon.classList.add("fa-pause");
+                ctrlIcon.classList.remove("fa-play");
+            }
+        }
+        if(song.play()){
+            setInterval(()=>{
+            prog.value=song.currentTime;
+           
+            },500)
+            setInterval(() =>{
+                songImg.style.transform=`rotate(${(song.currentTime * 10)}deg)`;
+            },5)
+          
+
+
+
+        }
+        prog.onchange=function(){
+            song.play();
+            song.currentTime=prog.value;
+            ctrlIcon.classList.add("fa-pause");
+            ctrlIcon.classList.remove("fa-play");
+        }
+    </script>
+</body>
+</html>
